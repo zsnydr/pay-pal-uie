@@ -1,11 +1,11 @@
 import React from 'react';
 
-const TextInput = ({ name, value, label, children }) => {
+const TextInput = ({ name, value, label, changeHandler, children }) => {
   return (
-    <div style={{ border: '1px solid grey' }}>
+    <div>
       <label htmlFor={name}>
         {label}
-        <input type="text" name={name} value={value} />
+        <input type="text" name={name} value={value} onChange={changeHandler} />
       </label>
       {children}
     </div>
