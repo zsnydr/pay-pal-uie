@@ -31,6 +31,8 @@ class Send extends Component {
     this.currencyHandler = this.currencyHandler.bind(this);
     this.clearForms = this.clearForms.bind(this);
     this.nextStep = this.nextStep.bind(this);
+    this.familyFriends = this.familyFriends.bind(this);
+    this.goodsServices = this.goodsServices.bind(this);
   }
 
   clickHandler(e) {
@@ -76,9 +78,23 @@ class Send extends Component {
     this.setState(update);
   }
 
+  familyFriends() {
+    console.log('xxx')
+    this.setState({
+      familyFriends: true,
+      goodsServices: false
+    });
+  }
+
+  goodsServices() {
+    this.setState({
+      familyFriends: false,
+      goodsServices: true
+    });
+  }
+
   nextStep() {
     if (!this.validateEmail(this.state.recipient)) {
-      console.log('invalid email address');
       this.setState({ error: 'Please provide a vaild email address.' });
       setTimeout(() => {
         this.setState({ error: '' });
@@ -86,8 +102,14 @@ class Send extends Component {
       return;
     }
     if (this.state.amount <= 0) {
-      console.log('negative amount');
       this.setState({ error: 'Please provide an amount greater than zero.' });
+      setTimeout(() => {
+        this.setState({ error: '' });
+      }, 3000);
+      return;
+    }
+    if (!this.state.familyFriends && !this.state.goodsServices) {
+      this.setState({ error: 'Please choose a type of payment.' });
       setTimeout(() => {
         this.setState({ error: '' });
       }, 3000);
@@ -100,6 +122,9 @@ class Send extends Component {
   }
 
   render() {
+    const familyStyle = this.state.familyFriends ? { color: 'red' } : {};
+    const goodsStyle = this.state.goodsServices ? { color: 'red' } : {};
+
     if (this.state.success) {
       return <Success amount={`${this.state.symbol}${this.state.amount} ${this.state.currency}`} recipient={this.state.recipient} clickHandler={this.clickHandler} />;
     }
@@ -107,11 +132,11 @@ class Send extends Component {
       <div className="send">
         <Header label="Send Money" />
         <TextInput changeHandler={this.changeHandler} name="recipient" value={this.state.recipient} label="To: "><span>CHECK</span></TextInput>
-        <TextInput changeHandler={this.changeHandler} name="amount" value={this.state.amount} label={'Amount: ' + this.state.symbol}><CurrencyList changeHandler={this.currencyHandler} /></TextInput>
+        <TextInput changeHandler={this.changeHandler} name="amount" value={this.state.amount} label={`Amount: ${this.state.symbol} `}><CurrencyList changeHandler={this.currencyHandler} /></TextInput>
         <TextInput changeHandler={this.changeHandler} name="message" value={this.state.message} label="Message (optional): " />
         <p>What's this payment for?</p>
-        <div>I'm sending money to family or friends</div>
-        <div>I'm paying for goods or services</div>
+        <div onClick={this.familyFriends} style={familyStyle}>I'm sending money to family or friends</div>
+        <div onClick={this.goodsServices} style={goodsStyle}>I'm paying for goods or services</div>
         {this.state.error.length > 0 && <ErrorMessage message={this.state.error} />}
         {this.state.isLoading && <Loading />}
         <Footer>
