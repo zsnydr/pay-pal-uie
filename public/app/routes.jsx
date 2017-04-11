@@ -1,18 +1,16 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import Nav from './nav';
 import Home from '../home/home';
-import About from '../about/about';
+import Send from '../send/send';
+import TranHistory from '../history/history';
 
 const Routes = () => (
   <Router>
-    <div>
-      <Nav />
-      <Switch>
-        <Route exact path="/" component={Home} />
-        <Route path="/about" component={About} />
-      </Switch>
-    </div>
+    <Switch>
+      <Route exact path="/" component={Home} />
+      <Route path="/send" component={Send} />
+      <Route path="/history" component={TranHistory} />
+    </Switch>
   </Router>
 );
 
