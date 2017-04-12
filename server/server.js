@@ -4,8 +4,14 @@ const bodyParser = require('body-parser');
 const webpack = require('webpack');
 const webpackConfig = require('./webpack.config');
 const webpackDevMiddleware = require('webpack-dev-middleware');
-
+const redis = require('redis');
 const genData = require('./genData');
+
+const client = redis.createClient();
+
+client.on('error', (err) => {
+  console.log(`Error from client: ${err}`);
+});
 
 const app = express();
 const compiler = webpack(webpackConfig);
@@ -22,8 +28,20 @@ if (process.env.NODE_ENV !== 'production') {
 
 app.get('/api/transactions', (req, res) => {
   const { start, end } = req.query;
-  const data = genData.slice(start * 20, end * 20);
-  res.send(data);
+  client.get('trans', (err, results) => {
+    if (err) console.log('Error getting data from Redis: ', err);
+    if (results) {
+      let data = JSON.parse(results);
+      data = data.slice(start * 20, end * 20);
+      res.send(data);
+    } else {
+      const data = genData.slice(start * 20, end * 20);
+      res.send(data);
+      // now add data to redis
+      const temp = JSON.stringify(genData);
+      client.setex('trans', 600, temp);  // expires in 10 minutes
+    }
+  });
 });
 
 // wildcard route for hard refresh
