@@ -5,7 +5,7 @@ const TextInput = ({ name, value, label, changeHandler, children }) => {
     <div>
       <label htmlFor={name}>
         {label}
-        <input type="text" name={name} value={value} onChange={changeHandler} />
+        <input style={{border: 'none'}} type="text" name={name} value={value} onChange={changeHandler} />
       </label>
       {children}
     </div>

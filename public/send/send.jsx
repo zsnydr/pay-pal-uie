@@ -23,7 +23,8 @@ class Send extends Component {
       goodsServices: false,
       isLoading: false,
       success: false,
-      error: ''
+      error: '',
+      isValidEmail: false
     };
 
     this.clickHandler = this.clickHandler.bind(this);
@@ -43,24 +44,22 @@ class Send extends Component {
     }
   }
 
-  changeHandler(e) {
-    const { name, value } = e.target;
-    this.setState({ [name]: value });
-  }
-
   validateEmail(email) {
     const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     return re.test(email);
+  }
+
+  changeHandler(e) {
+    const { name, value } = e.target;
+    const isValidEmail = this.validateEmail(this.state.recipient);
+    this.setState({ [name]: value, isValidEmail });
   }
 
   currencyHandler(e) {
     const select = e.target;
     const currency = select.options[select.selectedIndex].value;
     const symbol = currencyLookUp[currency];
-    const update = {
-      currency,
-      symbol
-    };
+    const update = { currency, symbol };
     this.setState(update);
   }
 
@@ -79,7 +78,6 @@ class Send extends Component {
   }
 
   familyFriends() {
-    console.log('xxx')
     this.setState({
       familyFriends: true,
       goodsServices: false
@@ -126,23 +124,23 @@ class Send extends Component {
     const goodsStyle = this.state.goodsServices ? { color: 'red' } : {};
 
     if (this.state.success) {
-      return <Success amount={`${this.state.symbol}${this.state.amount} ${this.state.currency}`} recipient={this.state.recipient} clickHandler={this.clickHandler} />;
+      return <Success amount={`${this.state.symbol}${Number(this.state.amount).toFixed(2)} ${this.state.currency}`} recipient={this.state.recipient} clickHandler={this.clickHandler} />;
     }
     return (
       <div className="send">
         <Header label="Send Money" />
-        <TextInput changeHandler={this.changeHandler} name="recipient" value={this.state.recipient} label="To: "><span>CHECK</span></TextInput>
+        <TextInput changeHandler={this.changeHandler} name="recipient" value={this.state.recipient} label="To: ">{this.state.isValidEmail && <img style={{ width: '18px', height: '18px' }} alt="Green Check" src="http://www.clipartbest.com/cliparts/7Ta/6oR/7Ta6oRARc.png" />}</TextInput>
         <TextInput changeHandler={this.changeHandler} name="amount" value={this.state.amount} label={`Amount: ${this.state.symbol} `}><CurrencyList changeHandler={this.currencyHandler} /></TextInput>
         <TextInput changeHandler={this.changeHandler} name="message" value={this.state.message} label="Message (optional): " />
         <p>What's this payment for?</p>
-        <div onClick={this.familyFriends} style={familyStyle}>I'm sending money to family or friends</div>
-        <div onClick={this.goodsServices} style={goodsStyle}>I'm paying for goods or services</div>
+        <div onClick={this.familyFriends} style={familyStyle}>I'm sending money to family or friends {this.state.familyFriends && <span>&#10003;</span>}</div>
+        <div onClick={this.goodsServices} style={goodsStyle}>I'm paying for goods or services {this.state.goodsServices && <span>&#10003;</span>}</div>
         {this.state.error.length > 0 && <ErrorMessage message={this.state.error} />}
-        {this.state.isLoading && <Loading />}
         <Footer>
           <Button label="Clear" clickHandler={this.clearForms} />
           <Button label="Next" clickHandler={this.nextStep} />
         </Footer>
+        {this.state.isLoading && <Loading />}
       </div>
     );
   }
