@@ -2,7 +2,7 @@ import React from 'react';
 
 const TextInput = ({ name, value, label, changeHandler, children }) => {
   return (
-    <div>
+    <div className="text-input">
       <label htmlFor={name}>
         {label}
         <input style={{border: 'none'}} type="text" name={name} value={value} onChange={changeHandler} />

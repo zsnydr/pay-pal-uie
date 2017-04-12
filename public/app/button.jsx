@@ -12,3 +12,6 @@ const Button = ({ name, value, className, clickHandler, label }) => {
 };
 
 export default Button;
+
+
+/*style={{background: 'linear-gradient(white, grey)'}}*/

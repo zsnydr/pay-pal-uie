@@ -1,7 +1,10 @@
 import React from 'react';
 
 const Footer = ({ children }) => (
-  <div>{children}</div>
+  <div className="footer">{children}</div>
 );
 
 export default Footer;
+
+
+//#412C17

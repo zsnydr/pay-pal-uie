@@ -129,13 +129,17 @@ class Send extends Component {
     return (
       <div className="send">
         <Header label="Send Money" />
-        <TextInput changeHandler={this.changeHandler} name="recipient" value={this.state.recipient} label="To: ">{this.state.isValidEmail && <img style={{ width: '18px', height: '18px' }} alt="Green Check" src="http://www.clipartbest.com/cliparts/7Ta/6oR/7Ta6oRARc.png" />}</TextInput>
-        <TextInput changeHandler={this.changeHandler} name="amount" value={this.state.amount} label={`Amount: ${this.state.symbol} `}><CurrencyList changeHandler={this.currencyHandler} /></TextInput>
-        <TextInput changeHandler={this.changeHandler} name="message" value={this.state.message} label="Message (optional): " />
-        <p>What's this payment for?</p>
-        <div onClick={this.familyFriends} style={familyStyle}>I'm sending money to family or friends {this.state.familyFriends && <span>&#10003;</span>}</div>
-        <div onClick={this.goodsServices} style={goodsStyle}>I'm paying for goods or services {this.state.goodsServices && <span>&#10003;</span>}</div>
-        {this.state.error.length > 0 && <ErrorMessage message={this.state.error} />}
+        <div className="send-container">
+          <div className="send-text-input-container">
+            <TextInput changeHandler={this.changeHandler} name="recipient" value={this.state.recipient} label="To: ">{this.state.isValidEmail && <img style={{ width: '18px', height: '18px', float: 'right' }} alt="Green Check" src="http://www.clipartbest.com/cliparts/7Ta/6oR/7Ta6oRARc.png" />}</TextInput>
+            <TextInput changeHandler={this.changeHandler} name="amount" value={this.state.amount} label={`Amount: ${this.state.symbol} `}><CurrencyList changeHandler={this.currencyHandler} /></TextInput>
+            <TextInput changeHandler={this.changeHandler} name="message" value={this.state.message} label="Message (optional): " />
+          </div>
+          <p>What's this payment for?</p>
+          <div onClick={this.familyFriends} style={familyStyle}>I'm sending money to family or friends {this.state.familyFriends && <span>&#10003;</span>}</div>
+          <div onClick={this.goodsServices} style={goodsStyle}>I'm paying for goods or services {this.state.goodsServices && <span>&#10003;</span>}</div>
+          {this.state.error.length > 0 && <ErrorMessage message={this.state.error} />}
+        </div>
         <Footer>
           <Button label="Clear" clickHandler={this.clearForms} />
           <Button label="Next" clickHandler={this.nextStep} />

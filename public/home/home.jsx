@@ -12,11 +12,17 @@ const Home = ({ history }) => {
   return (
     <div className="home">
       <Header label="What are we Doing?" />
-      <Button value="send" name="send" label="Send Money" clickHandler={clickHandler} />
-      <Button value="history" name="history" label="View Transaction History" clickHandler={clickHandler} />
+      <div className="home-button-container">
+        <Button value="send" name="send" label="Send Money" className="home-button" clickHandler={clickHandler} />
+        <Button value="history" name="history" label="View Transaction History" className="home-button" clickHandler={clickHandler} />
+      </div>
       <Footer />
     </div>
   );
 };
 
 export default Home;
+
+
+//#412C17 brown
+//#F4EBE5 tan

@@ -7,7 +7,7 @@ const config = {
   devtool: 'source-map',
   entry: [
     path.resolve(publicDir, 'index.jsx'),
-    path.resolve(publicDir, 'styles', 'index.scss')
+    path.resolve(publicDir, 'styles', 'index.css')
   ],
   output: {
     path: distDir,
@@ -31,7 +31,7 @@ const config = {
       }
     },
     {
-      test: /\.scss$/,
+      test: /\.css$/,
       loaders: ['style', 'css', 'sass']
     }]
   },
