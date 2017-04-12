@@ -63,36 +63,20 @@ class TranHistory extends Component {
       return <div>Fetching data...</div>;
     }
 
-    const listStyle = {
-      display: 'flex',
-      justifyContent: 'space-around',
-      alignItems: 'center',
-      flexWrap: 'wrap',
-      width: '30%',
-      height: '300px',
-      overflow: 'scroll',
-      border: '1px solid grey'
-    };
-
-    const listItemStyle = {
-      width: '95%',
-      display: 'flex',
-      justifyContent: 'space-around',
-      alignItems: 'center'
-    };
-
     return (
-      <div className="history">
+      <div className="trans-history">
         <Header label="Transaction History" />
-        <div style={listStyle} onScroll={debounce(this.getData, 3000, true)}>
+        <div className="trans-list" onScroll={debounce(this.getData, 3000, true)}>
           {this.state.transactions.map((tran) => (
-            <div style={listItemStyle} key={`${tran.date}${tran.amount}${tran.recipient}`}>
-              <div style={{width: '30%'}}>{tran.date}</div><div style={{width: '30%'}}>{tran.recipient}</div><div style={{width: '30%'}}>{tran.amount}</div>
+            <div className="trans-list-item" key={`${tran.date}${tran.amount}${tran.recipient}`}>
+              <span>{tran.date}</span>
+              <span>{tran.recipient}</span>
+              <span>{tran.amount}</span>
             </div>
           ))}
         </div>
         <Footer>
-          <Button label="Back" clickHandler={this.clickHandler} />
+          <Button className="trans-history-footer-button" label="Back" clickHandler={this.clickHandler} />
         </Footer>
       </div>
     );

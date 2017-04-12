@@ -1,11 +1,12 @@
 import React from 'react';
 
-const TextInput = ({ name, value, label, changeHandler, children }) => {
+const TextInput = ({ newLine, name, value, label, changeHandler, children }) => {
   return (
     <div className="text-input">
       <label htmlFor={name}>
         {label}
-        <input style={{border: 'none'}} type="text" name={name} value={value} onChange={changeHandler} />
+        {newLine === 'true' && <br />}
+        <input type="text" id={name} name={name} value={value} onChange={changeHandler} />
       </label>
       {children}
     </div>

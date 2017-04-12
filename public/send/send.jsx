@@ -3,6 +3,7 @@ import Header from '../app/header';
 import Footer from '../app/footer';
 import Loading from './loading';
 import TextInput from '../app/textInput';
+import TextArea from '../app/textArea';
 import Button from '../app/button';
 import Success from './success';
 import CurrencyList from './currencyList';
@@ -116,6 +117,7 @@ class Send extends Component {
       }, 3000);
       return;
     }
+    // mimic POST request to server, expect success or error
     this.setState({ isLoading: true });
     setTimeout(() => {
       this.setState({ success: true });
@@ -132,12 +134,12 @@ class Send extends Component {
         <div className="send-container">
           <div className="send-forms">
             <TextInput changeHandler={this.changeHandler} name="recipient" value={this.state.recipient} label="To: ">
-              {this.state.isValidEmail && <img className="recipient-valid-check" alt="Green Check" src="http://www.clipartbest.com/cliparts/7Ta/6oR/7Ta6oRARc.png" />}
+              {this.state.isValidEmail && <img className="recipient-valid-check" alt="Green Check" src="http://www.clipartbest.com/cliparts/bcy/64z/bcy64zkgi.png" />}
             </TextInput>
-            <TextInput changeHandler={this.changeHandler} name="amount" value={this.state.amount} label={`Amount: ${this.state.symbol} `}>
+            <TextInput changeHandler={this.changeHandler} name="amount" value={this.state.amount} label={`Amount: ${this.state.symbol}`}>
               <CurrencyList changeHandler={this.currencyHandler} />
             </TextInput>
-            <TextInput changeHandler={this.changeHandler} name="message" value={this.state.message} label="Message (optional): " />
+            <TextArea changeHandler={this.changeHandler} name="message" value={this.state.message} label="Message (optional): " />
           </div>
           <div className="send-pmt-type">
             <p>What's this payment for?</p>
