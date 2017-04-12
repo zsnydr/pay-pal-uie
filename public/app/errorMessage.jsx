@@ -1,7 +1,7 @@
 import React from 'react';
 
 const ErrorMessage = ({ message }) => (
-  <div>{message}</div>
+  <div className="send-error">{message}</div>
 );
 
 export default ErrorMessage;

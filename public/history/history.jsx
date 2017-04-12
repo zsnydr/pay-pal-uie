@@ -39,7 +39,6 @@ class TranHistory extends Component {
   }
 
   getData() {
-    console.log('called getData');
     axios.get(`/api/transactions?start=${this.state.firstIndex}&end=${this.state.lastIndex}`)
       .then(({ data }) => {
         console.log('Data from server ', data);

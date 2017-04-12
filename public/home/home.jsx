@@ -22,7 +22,3 @@ const Home = ({ history }) => {
 };
 
 export default Home;
-
-
-//#412C17 brown
-//#F4EBE5 tan

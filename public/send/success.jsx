@@ -5,15 +5,15 @@ import Button from '../app/button';
 
 const Success = ({ amount, recipient, clickHandler }) => {
   return (
-    <div className="success">
+    <div className="send-success">
       <Header label="Send Money" />
-      <div>
+      <div className="send-success-container">
         <p>You have sent {amount} to {recipient}!</p>
-        CHECKMARK
+        <span className="send-success-checkmark">&#10003;</span>
       </div>
       <Footer>
-        <Button value="send" name="send" label="Send Money" clickHandler={clickHandler} />
-        <Button value="history" name="history" label="View Transaction History" clickHandler={clickHandler} />
+        <Button className="send-success-footer-button" value="send" name="send" label="Send Money" clickHandler={clickHandler} />
+        <Button className="send-success-footer-button" value="history" name="history" label="Transaction History" clickHandler={clickHandler} />
       </Footer>
     </div>
   );

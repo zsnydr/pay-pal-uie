@@ -5,6 +5,3 @@ const Footer = ({ children }) => (
 );
 
 export default Footer;
-
-
-//#412C17

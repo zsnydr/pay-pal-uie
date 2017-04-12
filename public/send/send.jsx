@@ -70,9 +70,12 @@ class Send extends Component {
       currency: 'USD',
       symbol: '$',
       message: '',
+      familyFriends: false,
+      goodsServices: false,
       success: false,
       isLoading: false,
-      error: ''
+      error: '',
+      isValidEmail: false
     };
     this.setState(update);
   }
@@ -93,21 +96,21 @@ class Send extends Component {
 
   nextStep() {
     if (!this.validateEmail(this.state.recipient)) {
-      this.setState({ error: 'Please provide a vaild email address.' });
+      this.setState({ error: 'Please provide a vaild email address' });
       setTimeout(() => {
         this.setState({ error: '' });
       }, 3000);
       return;
     }
-    if (this.state.amount <= 0) {
-      this.setState({ error: 'Please provide an amount greater than zero.' });
+    if (this.state.amount <= 0 || isNaN(Number(this.state.amount))) {
+      this.setState({ error: 'Please provide an amount greater than zero' });
       setTimeout(() => {
         this.setState({ error: '' });
       }, 3000);
       return;
     }
     if (!this.state.familyFriends && !this.state.goodsServices) {
-      this.setState({ error: 'Please choose a type of payment.' });
+      this.setState({ error: 'Please choose a type of payment' });
       setTimeout(() => {
         this.setState({ error: '' });
       }, 3000);
@@ -120,9 +123,6 @@ class Send extends Component {
   }
 
   render() {
-    const familyStyle = this.state.familyFriends ? { color: 'red' } : {};
-    const goodsStyle = this.state.goodsServices ? { color: 'red' } : {};
-
     if (this.state.success) {
       return <Success amount={`${this.state.symbol}${Number(this.state.amount).toFixed(2)} ${this.state.currency}`} recipient={this.state.recipient} clickHandler={this.clickHandler} />;
     }
@@ -130,19 +130,29 @@ class Send extends Component {
       <div className="send">
         <Header label="Send Money" />
         <div className="send-container">
-          <div className="send-text-input-container">
-            <TextInput changeHandler={this.changeHandler} name="recipient" value={this.state.recipient} label="To: ">{this.state.isValidEmail && <img style={{ width: '18px', height: '18px', float: 'right' }} alt="Green Check" src="http://www.clipartbest.com/cliparts/7Ta/6oR/7Ta6oRARc.png" />}</TextInput>
-            <TextInput changeHandler={this.changeHandler} name="amount" value={this.state.amount} label={`Amount: ${this.state.symbol} `}><CurrencyList changeHandler={this.currencyHandler} /></TextInput>
+          <div className="send-forms">
+            <TextInput changeHandler={this.changeHandler} name="recipient" value={this.state.recipient} label="To: ">
+              {this.state.isValidEmail && <img className="recipient-valid-check" alt="Green Check" src="http://www.clipartbest.com/cliparts/7Ta/6oR/7Ta6oRARc.png" />}
+            </TextInput>
+            <TextInput changeHandler={this.changeHandler} name="amount" value={this.state.amount} label={`Amount: ${this.state.symbol} `}>
+              <CurrencyList changeHandler={this.currencyHandler} />
+            </TextInput>
             <TextInput changeHandler={this.changeHandler} name="message" value={this.state.message} label="Message (optional): " />
           </div>
-          <p>What's this payment for?</p>
-          <div onClick={this.familyFriends} style={familyStyle}>I'm sending money to family or friends {this.state.familyFriends && <span>&#10003;</span>}</div>
-          <div onClick={this.goodsServices} style={goodsStyle}>I'm paying for goods or services {this.state.goodsServices && <span>&#10003;</span>}</div>
-          {this.state.error.length > 0 && <ErrorMessage message={this.state.error} />}
+          <div className="send-pmt-type">
+            <p>What's this payment for?</p>
+            <div onClick={this.familyFriends} className={this.state.familyFriends ? 'send-pmt-type-active' : ''}>
+              I'm sending money to family or friends {this.state.familyFriends && <span className="send-pmt-type-checkmark">&#10003;</span>}
+            </div>
+            <div onClick={this.goodsServices} className={this.state.goodsServices ? 'send-pmt-type-active' : ''}>
+              I'm paying for goods or services {this.state.goodsServices && <span className="send-pmt-type-check">&#10003;</span>}
+            </div>
+            {this.state.error.length > 0 && <ErrorMessage message={this.state.error} />}
+          </div>
         </div>
         <Footer>
-          <Button label="Clear" clickHandler={this.clearForms} />
-          <Button label="Next" clickHandler={this.nextStep} />
+          <Button label="Clear" className="send-footer-button" clickHandler={this.clearForms} />
+          <Button label="Next" className="send-footer-button" clickHandler={this.nextStep} />
         </Footer>
         {this.state.isLoading && <Loading />}
       </div>
