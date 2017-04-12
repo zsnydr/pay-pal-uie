@@ -18,7 +18,7 @@ app.use(express.static(path.join(__dirname, '/dist')));
 
 // only use dev middleware if working in development
 // if (process.env.NODE_ENV !== 'production') {
-  app.use(webpackDevMiddleware(compiler));
+app.use(webpackDevMiddleware(compiler));
 // }
 
 app.use('/api', expressRouter);
