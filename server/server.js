@@ -5,6 +5,8 @@ const webpack = require('webpack');
 const webpackConfig = require('./webpack.config');
 const webpackDevMiddleware = require('webpack-dev-middleware');
 
+const genData = require('./genData');
+
 const app = express();
 const compiler = webpack(webpackConfig);
 
@@ -17,6 +19,12 @@ app.use(express.static(path.join(__dirname, '/dist')));
 if (process.env.NODE_ENV !== 'production') {
   app.use(webpackDevMiddleware(compiler));
 }
+
+app.get('/api/transactions', (req, res) => {
+  const { start, end } = req.query;
+  const data = genData.slice(start * 20, end * 20);
+  res.send(data);
+});
 
 // wildcard route for hard refresh
 app.get('*', (req, res) => {
