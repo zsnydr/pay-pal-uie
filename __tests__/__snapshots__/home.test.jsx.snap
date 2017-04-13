@@ -1,0 +1,34 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Home (Snapshot) Home renders home page 1`] = `
+<div
+  className="home"
+>
+  <div
+    className="header"
+  >
+    What are we Doing?
+  </div>
+  <div
+    className="home-button-container"
+  >
+    <button
+      className="home-button"
+      name="send"
+      onClick={[Function]}
+    >
+      Send Money
+    </button>
+    <button
+      className="home-button"
+      name="history"
+      onClick={[Function]}
+    >
+      View Transaction History
+    </button>
+  </div>
+  <div
+    className="footer"
+  />
+</div>
+`;

@@ -1,0 +1,9 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Button (Snapshot) Button renders a native button with given props 1`] = `
+<button
+  className={undefined}
+  name="testButton"
+  onClick={undefined}
+/>
+`;

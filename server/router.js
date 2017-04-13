@@ -1,15 +1,5 @@
-const redis = require('redis');
 const genData = require('./genData');
-
-const client = redis.createClient();
-
-client.on('error', (err) => {
-  console.log(`Error from client: ${err}`);
-});
-
-client.on('ready', () => {
-  console.log('Redis connection is ready');
-});
+const client = require('./redisClient');
 
 module.exports = (app) => {
   app.get('/transactions', (req, res) => {
