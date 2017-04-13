@@ -12,6 +12,7 @@ module.exports = (app) => {
         const data = JSON.parse(results);
         res.send(data);
       } else {
+        // send data to client, then add data to redis
         const data = genData.slice(index * amt, (index + 1) * amt);
         res.send(data);
         buildRedisChunks('trans', genData, amt, client, redis.print);

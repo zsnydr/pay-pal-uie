@@ -1,3 +1,6 @@
+// given a key name, set of data, and chunk size,
+// hash the data in chunks and inject into redis
+// with a createdAt field
 const buildRedisChunks = (key, dataSet, chunkSize, client, cb) => {
   let result = [];
   dataSet.forEach((item, i) => {
