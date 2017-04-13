@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import Header from '../app/header';
 import Footer from '../app/footer';
 import Loading from './loading';
@@ -6,8 +7,9 @@ import TextInput from '../app/textInput';
 import TextArea from '../app/textArea';
 import Button from '../app/button';
 import Success from './success';
-import CurrencyList from './currencyList';
-import currencyLookUp from './currencyLookUp';
+import validateEmail from './validateEmail';
+import currencyLookUpList from './currencyLookUpList';
+import CurrencyDropDown from './currencyDropDown';
 import ErrorMessage from '../app/errorMessage';
 
 class Send extends Component {
@@ -20,12 +22,12 @@ class Send extends Component {
       currency: 'USD',
       symbol: '$',
       message: '',
+      isValidEmail: false,
       familyFriends: false,
       goodsServices: false,
       isLoading: false,
       success: false,
-      error: '',
-      isValidEmail: false
+      error: ''
     };
 
     this.clickHandler = this.clickHandler.bind(this);
@@ -38,28 +40,23 @@ class Send extends Component {
   }
 
   clickHandler(e) {
-    if (e.target.value === 'send') {
+    if (e.target.name === 'send') {
       this.clearForms();
     } else {
-      this.props.history.push(e.target.value);
+      this.props.history.push(e.target.name);
     }
-  }
-
-  validateEmail(email) {
-    const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    return re.test(email);
   }
 
   changeHandler(e) {
     const { name, value } = e.target;
-    const isValidEmail = this.validateEmail(this.state.recipient);
+    const isValidEmail = validateEmail(this.state.recipient);
     this.setState({ [name]: value, isValidEmail });
   }
 
   currencyHandler(e) {
     const select = e.target;
     const currency = select.options[select.selectedIndex].value;
-    const symbol = currencyLookUp[currency];
+    const symbol = currencyLookUpList[currency];
     const update = { currency, symbol };
     this.setState(update);
   }
@@ -71,12 +68,12 @@ class Send extends Component {
       currency: 'USD',
       symbol: '$',
       message: '',
+      isValidEmail: false,
       familyFriends: false,
       goodsServices: false,
       success: false,
       isLoading: false,
-      error: '',
-      isValidEmail: false
+      error: ''
     };
     this.setState(update);
   }
@@ -96,7 +93,7 @@ class Send extends Component {
   }
 
   nextStep() {
-    if (!this.validateEmail(this.state.recipient)) {
+    if (!validateEmail(this.state.recipient)) {
       this.setState({ error: 'Please provide a vaild email address' });
       setTimeout(() => {
         this.setState({ error: '' });
@@ -137,7 +134,7 @@ class Send extends Component {
               {this.state.isValidEmail && <img className="recipient-valid-check" alt="Green Check" src="http://www.clipartbest.com/cliparts/bcy/64z/bcy64zkgi.png" />}
             </TextInput>
             <TextInput changeHandler={this.changeHandler} name="amount" value={this.state.amount} label={`Amount: ${this.state.symbol}`}>
-              <CurrencyList changeHandler={this.currencyHandler} />
+              <CurrencyDropDown changeHandler={this.currencyHandler} />
             </TextInput>
             <TextArea changeHandler={this.changeHandler} name="message" value={this.state.message} label="Message (optional): " />
           </div>
@@ -153,13 +150,17 @@ class Send extends Component {
           </div>
         </div>
         <Footer>
-          <Button label="Clear" className="send-footer-button" clickHandler={this.clearForms} />
-          <Button label="Next" className="send-footer-button" clickHandler={this.nextStep} />
+          <Button className="send-footer-button" label="Clear" name="clear" clickHandler={this.clearForms} />
+          <Button className="send-footer-button" label="Next" name="next" clickHandler={this.nextStep} />
         </Footer>
         {this.state.isLoading && <Loading />}
       </div>
     );
   }
 }
+
+Send.propTypes = {
+  history: PropTypes.object
+};
 
 export default Send;

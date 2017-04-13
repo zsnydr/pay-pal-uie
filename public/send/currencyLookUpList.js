@@ -1,6 +1,6 @@
 // copied from http://stackoverflow.com/questions/19373860/convert-currency-names-to-currency-symbol
 
-const currencyLookUp = {
+const currencyLookUpList = {
   USD: '$', // US Dollar
   EUR: '€', // Euro
   CRC: '₡', // Costa Rican Colón
@@ -18,4 +18,4 @@ const currencyLookUp = {
   VND: '₫' // Vietnamese Dong
 };
 
-export default currencyLookUp;
+export default currencyLookUpList;
