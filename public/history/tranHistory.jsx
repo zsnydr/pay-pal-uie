@@ -4,7 +4,7 @@ import axios from 'axios';
 import Header from '../app/header';
 import Footer from '../app/footer';
 import Button from '../app/button';
-import throttle from '../app/throttle';
+import throttle from './throttle';
 
 class TranHistory extends Component {
   constructor(props) {
