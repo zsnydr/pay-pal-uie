@@ -1,6 +1,6 @@
 # PayPal UIE
 
-Basic PayPal UIE that mimimcs sending payment via PayPal and viewing transaction history.
+Basic PayPal UIE that mimics sending payments and viewing transaction history.
 
 ## Table of Contents
 
