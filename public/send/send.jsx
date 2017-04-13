@@ -61,6 +61,20 @@ class Send extends Component {
     this.setState(update);
   }
 
+  familyFriends() {
+    this.setState({
+      familyFriends: true,
+      goodsServices: false
+    });
+  }
+
+  goodsServices() {
+    this.setState({
+      familyFriends: false,
+      goodsServices: true
+    });
+  }
+
   clearForms() {
     const update = {
       recipient: '',
@@ -76,20 +90,6 @@ class Send extends Component {
       error: ''
     };
     this.setState(update);
-  }
-
-  familyFriends() {
-    this.setState({
-      familyFriends: true,
-      goodsServices: false
-    });
-  }
-
-  goodsServices() {
-    this.setState({
-      familyFriends: false,
-      goodsServices: true
-    });
   }
 
   nextStep() {
@@ -123,7 +123,14 @@ class Send extends Component {
 
   render() {
     if (this.state.success) {
-      return <Success amount={`${this.state.symbol}${Number(this.state.amount).toFixed(2)} ${this.state.currency}`} recipient={this.state.recipient} clickHandler={this.clickHandler} />;
+      const successAttributes = {
+        amount: `${this.state.symbol}${Number(this.state.amount).toFixed(2)} ${this.state.currency}`,
+        recipient: this.state.recipient,
+        clickHandler: this.clickHandler
+      };
+      return (
+        <Success {...successAttributes} />
+      );
     }
     return (
       <div className="send">
@@ -139,12 +146,12 @@ class Send extends Component {
             <TextArea changeHandler={this.changeHandler} name="message" value={this.state.message} label="Message (optional): " />
           </div>
           <div className="send-pmt-type">
-            <p>What's this payment for?</p>
+            <p>{"What's this payment for?"}</p>
             <div onClick={this.familyFriends} className={this.state.familyFriends ? 'send-pmt-type-active' : ''}>
-              I'm sending money to family or friends {this.state.familyFriends && <span className="send-pmt-type-checkmark">&#10003;</span>}
+              {"I'm sending money to family or friends"} {this.state.familyFriends && <span className="send-pmt-type-checkmark">&#10003;</span>}
             </div>
             <div onClick={this.goodsServices} className={this.state.goodsServices ? 'send-pmt-type-active' : ''}>
-              I'm paying for goods or services {this.state.goodsServices && <span className="send-pmt-type-check">&#10003;</span>}
+              {"I'm paying for goods or services"} {this.state.goodsServices && <span className="send-pmt-type-check">&#10003;</span>}
             </div>
             {this.state.error.length > 0 && <ErrorMessage message={this.state.error} />}
           </div>

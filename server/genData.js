@@ -7,5 +7,4 @@ for (let i = 0; i < 251; i++) {
   const result = { date, amount, recipient };
   results.push(result);
 }
-
 module.exports = results;

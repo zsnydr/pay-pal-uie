@@ -18,6 +18,7 @@
     "comma-dangle": ["error", "never"],
     "no-console": 0,
     "react/forbid-prop-types": [0, { "forbid": ["any"] }],
+    "space-before-function-paren": ["error", "never"],
     "require-jsdoc": ["error", {
       "require": {
         "FunctionDeclaration": false,

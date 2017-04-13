@@ -17,17 +17,17 @@ const config = {
     loaders: [{
       test: /\.jsx$/,
       exclude: /node_modules/,
-      loader: 'babel-loader', // 'babel-loader' is also a valid name to reference
+      loader: 'babel-loader',
       query: {
-        presets: ['react', 'es2015'] // can add "es2015" to compile to es5
+        presets: ['react', 'es2015']
       }
     },
     {
       test: /\.js$/,
       exclude: /(node_modules)/,
-      loader: 'babel-loader', // 'babel-loader' is also a valid name to reference
+      loader: 'babel-loader',
       query: {
-        presets: ['es2015'] // can add "es2015" to compile to es5
+        presets: ['es2015']
       }
     },
     {
@@ -36,10 +36,7 @@ const config = {
     }]
   },
   resolve: {
-    extensions: ['', '.js', '.jsx'],
-    alias: {
-      'bootstrap-sass$': 'bootstrap-sass/assets/stylesheets/bootstrap'
-    }
+    extensions: ['', '.js', '.jsx']
   }
 };
 

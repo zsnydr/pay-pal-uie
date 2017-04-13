@@ -4,7 +4,7 @@ import axios from 'axios';
 import Header from '../app/header';
 import Footer from '../app/footer';
 import Button from '../app/button';
-import debounce from '../app/debounce';
+import throttle from '../app/throttle';
 
 class TranHistory extends Component {
   constructor(props) {
@@ -18,6 +18,7 @@ class TranHistory extends Component {
 
     this.clickHandler = this.clickHandler.bind(this);
     this.getTransactions = this.getTransactions.bind(this);
+    this.loadNextData = throttle(this.getTransactions, 1000);
 
     this.getTransactions();
   }
@@ -25,7 +26,6 @@ class TranHistory extends Component {
   getTransactions() {
     axios.get(`/api/transactions?start=${this.state.firstIndex}&end=${this.state.lastIndex}`)
       .then(({ data }) => {
-        console.log('Data from server ', data);
         const update = {
           transactions: [...this.state.transactions, ...data],
           firstIndex: this.state.firstIndex + 1,
@@ -34,7 +34,8 @@ class TranHistory extends Component {
         this.setState(update);
       })
       .catch((err) => {
-        console.log('Error getting data ', err);
+        console.log(`Error getting transaction data: ${err}`);
+        // TODO: handle error gracefully
       });
   }
 
@@ -47,7 +48,7 @@ class TranHistory extends Component {
       return (
         <div className="trans-history">
           <Header label="Transaction History" />
-          <div className="trans-list">Fetching data...</div>
+          <div className="trans-list">Waiting for transaction data</div>
           <Footer>
             <Button className="trans-history-footer-button" label="Back" clickHandler={this.clickHandler} />
           </Footer>
@@ -57,7 +58,7 @@ class TranHistory extends Component {
     return (
       <div className="trans-history">
         <Header label="Transaction History" />
-        <div className="trans-list" onScroll={debounce(this.getTransactions, 3000, true)}>
+        <div className="trans-list" onScroll={this.loadNextData}>
           {this.state.transactions.map(tran => (
             <div className="trans-list-item" key={`${tran.date}${tran.amount}${tran.recipient}`}>
               <span>{tran.date}</span>
