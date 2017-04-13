@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 const Header = ({ label }) => (
-  <div className="header">{label}</div>
+  <header className="header">{label}</header>
 );
 
 Header.propTypes = {
