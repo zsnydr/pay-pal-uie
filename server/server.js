@@ -3,7 +3,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const webpack = require('webpack');
 const webpackDevMiddleware = require('webpack-dev-middleware');
-const webpackConfig = require('../webpack.config');
+const webpackConfig = require('./webpack.config');
 const router = require('./router');
 
 const app = express();

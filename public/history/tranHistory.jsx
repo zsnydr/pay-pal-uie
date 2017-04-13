@@ -12,8 +12,9 @@ class TranHistory extends Component {
 
     this.state = {
       transactions: [],
-      firstIndex: 0,
-      lastIndex: 1
+      noMoreData: false,
+      dataPerFetch: 20,
+      index: 0
     };
 
     this.clickHandler = this.clickHandler.bind(this);
@@ -24,12 +25,13 @@ class TranHistory extends Component {
   }
 
   getTransactions() {
-    axios.get(`/api/transactions?start=${this.state.firstIndex}&end=${this.state.lastIndex}`)
+    if (this.state.noMoreData) return;
+    axios.get(`/api/transactions?index=${this.state.index}&amt=${this.state.dataPerFetch}`)
       .then(({ data }) => {
         const update = {
           transactions: [...this.state.transactions, ...data],
-          firstIndex: this.state.firstIndex + 1,
-          lastIndex: this.state.lastIndex + 1
+          noMoreData: data.length === 0,
+          index: this.state.index + 1
         };
         this.setState(update);
       })
