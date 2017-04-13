@@ -280,7 +280,6 @@
   overflow: scroll;
   display: flex;
   flex-direction: column;
-  
 }
 
 .trans-list-item {
@@ -299,7 +298,6 @@
 .trans-list-item:nth-child(odd) {
   background-color: #E4D5C4;
 }
-
 
 .trans-history-footer-button {
   display: flex;
