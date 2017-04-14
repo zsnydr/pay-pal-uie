@@ -1,6 +1,5 @@
-// given a key value pair, set of data, and chunk size,
-// hash the data in chunks and inject into redis
-// with a createdAt field
+// given a key value pair, set of data, and chunk size, hash the data
+// in chunks and inject into redis with a createdAt field
 const buildRedisChunks = (key, value, dataSet, chunkSize, client, cb) => {
   let result = [];
   dataSet.forEach((item, i) => {

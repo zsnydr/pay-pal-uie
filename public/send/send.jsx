@@ -41,7 +41,7 @@ class Send extends Component {
 
   clickHandler(e) {
     if (e.target.name === 'send') {
-      this.clearForms();
+      this.clearForms();  // given Success in rendered by Send, need to clear forms for new tran
     } else {
       this.props.history.push(e.target.name);
     }

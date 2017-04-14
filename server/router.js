@@ -9,6 +9,7 @@ module.exports = (app) => {
     client.hget(`trans:${index}`, 'transactions', (err, results) => {
       if (err) console.log(`Error getting data from Redis: ${err}`); // TODO: handle error
       if (results) {
+        // TODO: add logic to check if chunk needs to be updated from DB (based on createdAt)
         const data = JSON.parse(results);
         res.send(data);
       } else {

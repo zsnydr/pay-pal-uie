@@ -11,6 +11,8 @@ const expressRouter = express.Router();
 
 const compiler = webpack(webpackConfig);
 
+// TODO: add auth and session middleware
+
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 

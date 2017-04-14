@@ -10,6 +10,8 @@ class TranHistory extends Component {
   constructor(props) {
     super(props);
 
+    // a more scalable approach would be to control dataPerFetch and index
+    // with a config object and/or pass it as props, maybe even from user input
     this.state = {
       transactions: [],
       noMoreData: false,
@@ -30,10 +32,10 @@ class TranHistory extends Component {
       .then(({ data }) => {
         const update = {
           transactions: [...this.state.transactions, ...data],
-          noMoreData: data.length === 0,
+          noMoreData: data.length === 0,  // determines if next API call is necessary
           index: this.state.index + 1
         };
-        this.setState(update);
+        this.setState(update);  // instead, could use Redux to mimic state of Redis
       })
       .catch((err) => {
         console.log(`Error getting transaction data: ${err}`);

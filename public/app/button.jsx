@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 const Button = ({ name, className, clickHandler, label }) => {
   const attributes = {
     name,
-    className,
+    className,  // TODO: investigate passing className as props
     onClick: clickHandler
   };
   return <button {...attributes}>{label}</button>;

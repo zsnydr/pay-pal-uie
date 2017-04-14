@@ -10,4 +10,21 @@ for (let i = 0; i < 250; i++) {
   results.push(result);
 }
 
+const dateSort = (a, b) => {
+  const aSplit = a.date.split('/').map(num => Number(num));
+  const bSplit = b.date.split('/').map(num => Number(num));
+  if (aSplit[0] > bSplit[0]) {
+    return -1;
+  }
+  if (aSplit[0] === bSplit[0]) {
+    if (aSplit[1] >= bSplit[1]) {
+      return -1;
+    }
+    return 1;
+  }
+  return 1;
+};
+
+results.sort(dateSort);
+
 module.exports = results;
