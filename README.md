@@ -4,14 +4,17 @@ Basic PayPal UIE that mimics sending payments and viewing transaction history.
 
 ## Table of Contents
 
-[Usage](#Usage)
-[Requirements](#development)
-[Installing Dependencies](#installing-dependencies)
+1.  [Usage](#Usage)
+1.  [Requirements](#development)
+1.  [Installing Dependencies](#installing-dependencies)
 
 ## Usage
 
 With dependencies installed, and redis server running, run:
+
+```sh
 npm start
+```
 
 # Requirements
 
@@ -56,5 +59,6 @@ For development:
 From within the root directory:
 
 ```sh
+brew install redis
 npm install
 ```
